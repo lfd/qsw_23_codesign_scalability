@@ -5,7 +5,7 @@
 Clone the repository to a location of your choosing or just download the dockerfile:
 
 ```
-git clone https://github.com/quantumdoubleblind/qsw_2023.git
+git clone https://github.com/lfd/qsw_23_codesign_scalability.git
 ```
 
 ### Docker
