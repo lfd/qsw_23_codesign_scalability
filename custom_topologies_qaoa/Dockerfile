@@ -1,20 +1,26 @@
-# Base image
-FROM python:3.9-slim-buster
+FROM --platform=linux/amd64 python:3.9-slim-bookworm
 
 WORKDIR /app
 
-#Install Git
-RUN apt-get update && apt-get install -y git
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       git \
+       build-essential \
+       gfortran \
+       libopenblas-dev \
+       liblapack-dev \
+       pkg-config \
+    && rm -rf /var/lib/apt/lists/*
 
-#upgrade PIP
-RUN pip install --upgrade pip
+RUN python -m pip install --upgrade pip wheel "setuptools<82"
 
-#Clone git repository
+COPY requirements.txt /app/requirements.txt
+RUN python -m pip install --no-build-isolation "numpy==1.19.5"
+RUN python -m pip install --no-build-isolation -r /app/requirements.txt
+
 RUN git clone https://github.com/quantumdoubleblind/qsw_2023.git
 
-#Install dependencies
-ADD  requirements.txt app/
+COPY run.sh /app/run.sh
+RUN chmod +x /app/run.sh
 
-RUN pip install -r app/requirements.txt
-
-CMD ["python", "qsw_2023/custom_topologies_qaoa/src/experiments.py"]
+CMD ["/bin/sh", "/app/run.sh"]
