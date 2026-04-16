@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "What problem do you want to run: tsp, max3sat, maxcut or numpart"
+echo "What problem do you want to run: tsp, max3sat, maxcut or num_part"
 read -r problem_to_solve
 
 echo "Choose your graph_densitiy: Number between 0.0 and 1.0"
@@ -23,5 +23,5 @@ echo "Running the experiment for ${problem_to_solve} with graph density ${graph_
 ${parallel_threads} parallel threads with ${count_layer} QAOA layer using a pptimization level of ${opt_level}"
 
 
-python qsw_2023/custom_topologies_qaoa/src/experiments.py "$graph_densitiy" "$opt_level" "$comp_averages" "$parallel_threads" "$problem_to_solve" "$count_layer"
-cmd /ks
+python src/experiments.py "$graph_densitiy" "$opt_level" "$comp_averages" "$parallel_threads" "$problem_to_solve" "$count_layer"
+
